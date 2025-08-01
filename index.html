@@ -2,15 +2,26 @@
 <html>
 <head>
   <title>Expense Splitter</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { margin: 5px; }
+  </style>
 </head>
 <body>
   <h2>Expense Splitter</h2>
-  <form id="expenseForm">
-    <input type="text" id="name" placeholder="Person Name" required>
-    <input type="number" id="amount" placeholder="Amount Spent" required>
-    <button type="submit">Add</button>
-  </form>
-  <div id="output"></div>
+
+  <label>Total Amount: </label>
+  <input type="number" id="totalAmount" placeholder="Enter total amount"><br>
+
+  <label>Enter Member Name:</label>
+  <input type="text" id="memberName" placeholder="Name">
+  <button onclick="addMember()">Add Member</button><br>
+
+  <ul id="memberList"></ul>
+
+  <button onclick="splitAmount()">Split</button>
+
+  <div id="output" style="margin-top: 20px;"></div>
 
   <script src="script.js"></script>
 </body>

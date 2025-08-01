@@ -1,28 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Expense Splitter</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    input, button { margin: 5px; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    form, .box {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin: .4rem 0 .2rem;
+    }
+    input, select, button {
+      padding: .5rem;
+      font-size: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: .5rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: .5rem;
+      text-align: left;
+    }
+    .flex {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .flex > * {
+      flex: 1;
+    }
+    .right {
+      text-align: right;
+    }
   </style>
 </head>
 <body>
-  <h2>Expense Splitter</h2>
 
-  <label>Total Amount: </label>
-  <input type="number" id="totalAmount" placeholder="Enter total amount"><br>
+<h1>Expense Splitter</h1>
 
-  <label>Enter Member Name:</label>
-  <input type="text" id="memberName" placeholder="Name">
-  <button onclick="addMember()">Add Member</button><br>
+<!-- Participants -->
+<section class="box">
+  <h2>1) Participants</h2>
+  <form id="participantForm">
+    <div class="flex">
+      <input id="participantName" placeholder="Name e.g. Abhishek" required/>
+      <button type="submit">Add Participant</button>
+      <button type="button" id="resetAll" style="background:#f44336;color:#fff;">Reset All</button>
+    </div>
+  </form>
+  <ul id="participantsList"></ul>
+</section>
 
-  <ul id="memberList"></ul>
+<!-- Expenses -->
+<section class="box">
+  <h2>2) Add Expense</h2>
+  <form id="expenseForm">
+    <div class="flex">
+      <select id="payer" required></select>
+      <input id="amount" type="number" step="0.01" min="0" placeholder="Amount" required/>
+      <input id="desc" placeholder="Description (optional)"/>
+      <button type="submit">Add Expense</button>
+    </div>
+  </form>
 
-  <button onclick="splitAmount()">Split</button>
+  <table id="expensesTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Payer</th>
+        <th class="right">Amount</th>
+        <th>Description</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">Total</th>
+        <th class="right" id="totalAmount">0.00</th>
+        <th colspan="2"></th>
+      </tr>
+    </tfoot>
+  </table>
+</section>
 
-  <div id="output" style="margin-top: 20px;"></div>
+<!-- Result -->
+<section class="box">
+  <h2>3) Settle Up</h2>
+  <button id="compute">Compute Split</button>
 
-  <script src="script.js"></script>
+  <h3>Balances</h3>
+  <table id="balancesTable">
+    <thead>
+      <tr><th>Name</th><th class="right">Paid</th><th class="right">Share</th><th class="right">Net</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h3>Who pays whom</h3>
+  <ul id="transfers"></ul>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
